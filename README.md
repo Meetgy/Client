@@ -1,3 +1,3 @@
 # Client
 
-## I'm currently using this repo for testing purposes
+## I'm currently using this repo for testing purposes.
