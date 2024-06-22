@@ -10,14 +10,14 @@ function App() {
   const retryTimeout = useRef(null);
 
   useEffect(() => {
-    const userId = window.localStorage.getItem('biscut');
+    const userId = window.localStorage.getItem("biscut");
     const connectWebSocket = () => {
       const socket = new WebSocket(`ws://localhost:8000/chat?userId=${userId}`);
 
       socket.onopen = () => {
         console.log("Connected");
         setSocket(socket);
-        setRetryCount(0);
+        setRetryCount(0); // Reset retry count on successful connection
       };
 
       socket.onmessage = (msg) => {
@@ -34,7 +34,7 @@ function App() {
       socket.onclose = () => {
         if (retryCount < maxRetries) {
           const retryDelay = Math.min(1000 * Math.pow(2, retryCount), 30000); // Exponential backoff, max 30 seconds
-          console.log(`WebSocket disconnected retry in ${retryDelay / 1000}`);
+          console.log(`WebSocket disconnected retry in ${retryDelay / 1000} seconds...`);
           retryTimeout.current = setTimeout(() => {
             setRetryCount(pervCount => pervCount + 1);
             connectWebSocket(); // Retry connection (Recursion)
@@ -43,7 +43,7 @@ function App() {
           console.log("Max retries reached, could not connect to WebSocket.");
         }
       };
-    }
+    };
 
     connectWebSocket(); // Initial connection attempt
 
@@ -55,7 +55,7 @@ function App() {
       if (retryTimeout.current) {
         clearTimeout(retryTimeout.current); // Clear any pending retries on unmount
       }
-    }
+    };
   }, [retryCount]); // Reconnect on retry count change
 
   const handleSendMSG = () => {
