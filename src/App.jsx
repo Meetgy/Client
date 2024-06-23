@@ -8,6 +8,7 @@ function App() {
   const [retryCount, setRetryCount] = useState(0);
   const maxRetries = 5;
   const retryTimeout = useRef(null);
+  const [wsError, setWsError] = useState(false);
 
   useEffect(() => {
     const userId = window.localStorage.getItem("biscut");
@@ -28,7 +29,8 @@ function App() {
       };
 
       socket.onerror = (error) => {
-        console.error("WebSocket error:", error);
+        setWsError(true);
+        console.log(error)
       };
 
       socket.onclose = () => {
@@ -98,11 +100,11 @@ function App() {
       });
   };
 
-  if (!socket) {
+  if (!socket && wsError) {
     return (
-      <div className="bg-[#212121] w-screen h-screen flex flex-col justify-center items-center text-white">
-        connecting to ws server. Loading...
-      </div>
+      <d className="bg-[#212121] w-screen h-screen flex flex-col justify-center items-center text-white">
+        {`We're`} having trouble connecting right now. Please check your internet connection and try again later
+      </d>
     );
   }
   const content = msgs.map((msg, i) => {
