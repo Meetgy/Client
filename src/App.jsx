@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import { useFetchUsersQuery } from "./store";
+import Connections from "./components/Connections";
 
 function App() {
   const [socket, setSocket] = useState(null);
@@ -9,6 +11,8 @@ function App() {
   const maxRetries = 5;
   const retryTimeout = useRef(null);
   const [wsError, setWsError] = useState(false);
+
+  const { data, isError, isSuccess } = useFetchUsersQuery();
 
   useEffect(() => {
     const userId = window.localStorage.getItem("biscut");
@@ -107,7 +111,7 @@ function App() {
       </d>
     );
   }
-  const content = msgs.map((msg, i) => {
+  const content = msgs?.map((msg, i) => {
     return (
       <div key={i} className="text-white">
         {msg?.message?.content}
@@ -133,7 +137,6 @@ function App() {
       placeholder: "PASSWORD",
     },
   ];
-
   const Input = dataInputs.map((data, i) => {
     return (
       <div key={i}>
@@ -148,6 +151,11 @@ function App() {
     );
   });
 
+  let users;
+  if(!isError && isSuccess) {
+    users = <Connections data={data} />
+  }
+
   return (
     <div className="bg-[#212121] w-screen h-screen flex flex-col justify-center items-center">
       <form
@@ -160,7 +168,9 @@ function App() {
         </button>
       </form>
       <div>
-        <div></div>
+        {users}
+      </div>
+      <div>
         {content}
         <input
           className="w-48 px-1 text-base m-2 bg-gray-100 rounded-md"
