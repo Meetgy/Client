@@ -152,7 +152,7 @@ function App() {
   });
 
   let users;
-  if(!isError && isSuccess) {
+  if (!isError && isSuccess) {
     users = <Connections data={data} />
   }
 
@@ -167,24 +167,26 @@ function App() {
           JOIN
         </button>
       </form>
-      <div>
-        {users}
-      </div>
-      <div>
-        {content}
-        <input
-          className="w-48 px-1 text-base m-2 bg-gray-100 rounded-md"
-          type="text"
-          onChange={(e) => setNewMsg(e.target.value)}
-          value={newMsg}
-          placeholder="Send Msg..."
-        />
-        <button
-          className="px-2 bg-gray-300 text-base text-black rounded-md"
-          onClick={handleSendMSG}
-        >
-          Send
-        </button>
+      <div className="flex flex-row items-center">
+        <div>
+          {users}
+        </div>
+        <div>
+          {content}
+          <input
+            className="w-48 px-1 text-base m-2 bg-gray-100 rounded-md"
+            type="text"
+            onChange={(e) => setNewMsg(e.target.value)}
+            value={newMsg}
+            placeholder="Send Msg..."
+          />
+          <button
+            className="px-2 bg-gray-300 text-base text-black rounded-md"
+            onClick={handleSendMSG}
+          >
+            Send
+          </button>
+        </div>
       </div>
     </div>
   );
