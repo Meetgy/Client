@@ -5,12 +5,14 @@ import Connections from "./components/Connections";
 
 function App() {
   const [socket, setSocket] = useState(null);
+  const [receiver, setReceiver] = useState(null);
   const [newMsg, setNewMsg] = useState("");
   const [msgs, setMsgs] = useState([]);
   const [retryCount, setRetryCount] = useState(0);
   const maxRetries = 5;
   const retryTimeout = useRef(null);
   const [wsError, setWsError] = useState(false);
+
 
   const { data, isError, isSuccess } = useFetchUsersQuery();
 
@@ -65,18 +67,25 @@ function App() {
   }, [retryCount]); // Reconnect on retry count change
 
   const handleSendMSG = () => {
-    const connections = JSON.parse(window.localStorage.getItem("connections"));
     if (newMsg != "") {
-      const data = JSON.stringify({
-        content: newMsg,
-        sender_id: window.localStorage.getItem("biscut"),
-        receiver_id: connections[0],
-        state: "pending",
-      });
-      socket.send(data);
-      setNewMsg("");
+      if (receiver) {
+        const data = JSON.stringify({
+          content: newMsg,
+          sender_id: window.localStorage.getItem("biscut"),
+          receiver_id: receiver._id,
+          state: "pending",
+        });
+        socket.send(data);
+        setNewMsg("");
+      } else {
+        alert("Select a User to send Msg")
+      }
     }
   };
+
+  const handleReceiverId = (user) => {
+    setReceiver(user)
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -87,17 +96,13 @@ function App() {
       email: e.target.email.value,
       password: e.target.password.value,
       status: "online",
-      connections: ["66641d65c4143d51b00480ed", "666569a036995de3965f84bb"],
+      // connections: ["66641d65c4143d51b00480ed", "666569a036995de3965f84bb"],
     };
 
     axios
       .post("http://localhost:8000/user/signup", user)
       .then(function (response) {
         window.localStorage.setItem("biscut", response?.data?._id);
-        window.localStorage.setItem(
-          "connections",
-          JSON.stringify(response?.data?.connections)
-        );
       })
       .catch(function (error) {
         console.log(error);
@@ -153,7 +158,7 @@ function App() {
 
   let users;
   if (!isError && isSuccess) {
-    users = <Connections data={data} />
+    users = <Connections data={data} handleReceiverId={handleReceiverId} />
   }
 
   return (
@@ -172,6 +177,9 @@ function App() {
           {users}
         </div>
         <div>
+          <div className="text-gray-100 text-lg m-1">
+            {receiver?.name}
+          </div>
           {content}
           <input
             className="w-48 px-1 text-base m-2 bg-gray-100 rounded-md"
