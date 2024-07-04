@@ -11,7 +11,7 @@ const Connections = ({ data, handleReceiverId }) => {
     }
 
     let content = data?.map((user, i) => {
-        if(user._id !== userId) {
+        if (user._id !== userId) {
             return (
                 <div key={i} className="flex flex-row gap-2 bg-gray-950" onClick={() => {
                     handleReceiverId(user);
@@ -27,7 +27,7 @@ const Connections = ({ data, handleReceiverId }) => {
     return (
         <div className="text-white w-96 ">
             <div onClick={handleDropDown} className="flex flex-row items-center">
-                Users { isOpen ? <IoMdArrowDropup className="text-xl"/> : <IoMdArrowDropdown className="text-xl"/> }
+                Users {isOpen ? <IoMdArrowDropup className="text-xl" /> : <IoMdArrowDropdown className="text-xl" />}
             </div>
             <div className="h-48 overflow-y-auto my-1">
                 {isOpen && content}
