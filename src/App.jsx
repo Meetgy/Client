@@ -1,21 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { useFetchUsersQuery } from "./store";
-import Connections from "./components/Connections";
-import { TiMessageTyping } from "react-icons/ti";
+import Chat from "./components/Chat";
 
 function App() {
   const [socket, setSocket] = useState(null);
-  const [receiver, setReceiver] = useState(null);
-  const [newMsg, setNewMsg] = useState("");
   const [msgs, setMsgs] = useState([]);
   const [retryCount, setRetryCount] = useState(0);
   const maxRetries = 5;
   const retryTimeout = useRef(null);
   const [wsError, setWsError] = useState(false);
-
-
-  const { data, isError, isSuccess } = useFetchUsersQuery();
 
   useEffect(() => {
     const userId = window.localStorage.getItem("biscut");
@@ -67,27 +60,6 @@ function App() {
     };
   }, [retryCount]); // Reconnect on retry count change
 
-  const handleSendMSG = () => {
-    if (newMsg != "") {
-      if (receiver) {
-        const data = JSON.stringify({
-          content: newMsg,
-          sender_id: window.localStorage.getItem("biscut"),
-          receiver_id: receiver._id,
-          state: "pending",
-        });
-        socket.send(data);
-        setNewMsg("");
-      } else {
-        alert("Select a User to send Msg")
-      }
-    }
-  };
-
-  const handleReceiverId = (user) => {
-    setReceiver(user)
-  }
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -117,13 +89,6 @@ function App() {
       </d>
     );
   }
-  const content = msgs?.map((msg, i) => {
-    return (
-      <div key={i} className="text-white flex flex-row items-center">
-        {msg?.message?.content} - {msg?.message?.state}
-      </div>
-    );
-  });
 
   const dataInputs = [
     {
@@ -157,10 +122,6 @@ function App() {
     );
   });
 
-  let users;
-  if (!isError && isSuccess) {
-    users = <Connections data={data} handleReceiverId={handleReceiverId} />
-  }
 
   return (
     <div className="bg-[#212121] w-screen h-screen flex flex-col justify-center items-center">
@@ -173,30 +134,8 @@ function App() {
           JOIN
         </button>
       </form>
-      <div className="flex flex-row items-center m-1">
-        <div>
-          {users}
-        </div>
-        <div>
-          <div className="text-gray-100 text-base gap-1 flex flex-row items-center">
-            <TiMessageTyping className="text-xl" />
-            {receiver?.name}
-          </div>
-          {content}
-          <input
-            className="w-48 px-1 text-base m-2 bg-gray-100 rounded-md"
-            type="text"
-            onChange={(e) => setNewMsg(e.target.value)}
-            value={newMsg}
-            placeholder="Send Msg..."
-          />
-          <button
-            className="px-2 bg-gray-300 text-base text-black rounded-md"
-            onClick={handleSendMSG}
-          >
-            Send
-          </button>
-        </div>
+      <div>
+        {wsError || <Chat socket={socket} msgs={msgs} />}
       </div>
     </div>
   );
