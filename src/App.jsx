@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useFetchUsersQuery } from "./store";
 import Connections from "./components/Connections";
+import { TiMessageTyping } from "react-icons/ti";
 
 function App() {
   const [socket, setSocket] = useState(null);
@@ -118,8 +119,8 @@ function App() {
   }
   const content = msgs?.map((msg, i) => {
     return (
-      <div key={i} className="text-white">
-        {msg?.message?.content}
+      <div key={i} className="text-white flex flex-row items-center">
+        {msg?.message?.content} - {msg?.message?.state}
       </div>
     );
   });
@@ -172,12 +173,13 @@ function App() {
           JOIN
         </button>
       </form>
-      <div className="flex flex-row items-center">
+      <div className="flex flex-row items-center m-1">
         <div>
           {users}
         </div>
         <div>
-          <div className="text-gray-100 text-lg m-1">
+          <div className="text-gray-100 text-base gap-1 flex flex-row items-center">
+            <TiMessageTyping className="text-xl" />
             {receiver?.name}
           </div>
           {content}
