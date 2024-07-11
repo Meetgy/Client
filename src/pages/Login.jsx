@@ -1,3 +1,4 @@
+import Input from "../components/Input";
 import { useSignupMutation } from "../store";
 
 const LoginPage = () => {
@@ -18,7 +19,7 @@ const LoginPage = () => {
     };
     let ErrorContent;
     if(results.isError) {
-        ErrorContent = <div>Please try again after some time</div>
+        ErrorContent = <div className="p-2 text-violet-400 text-xl ">Please try again after some time</div>
     }
     if (results.isSuccess) {
         window.localStorage.setItem("biscut", results?.data?._id);
@@ -27,47 +28,51 @@ const LoginPage = () => {
     const dataInputs = [
         {
             name: "username",
-            placeholder: "USERNAME",
+            placeholder: "Username",
+            minlength: "1",
+            maxlength: "50",
         },
         {
             name: "name",
-            placeholder: "NAME",
+            placeholder: "Name",
+            minlength: "1",
+            maxlength: "50",
         },
         {
             name: "email",
-            placeholder: "EMAIL",
+            placeholder: "Email",
+            minlength: null,
+            maxlength: null,
         },
         {
             name: "password",
-            placeholder: "PASSWORD",
+            placeholder: "Password",
+            minlength: null,
+            maxlength: null,
         },
     ];
-    const Input = dataInputs.map((data, i) => {
+    const Inputs = dataInputs.map((data, i) => {
         return (
-            <div key={i}>
-                <input
-                    key={i}
-                    className="w-48 px-1 text-base m-2 bg-gray-100 rounded-md "
-                    name={data.name}
-                    type="text"
-                    placeholder={data.placeholder}
-                />
-            </div>
+            <Input key={i} data={data}/>
         );
     });
 
     return (
-        <div className="bg-[#212121] w-screen h-screen flex flex-col justify-center items-center">
-            {results.isError && ErrorContent}
-            <form
-                onSubmit={handleSubmit}
-                className="flex flex-row justify-center items-center"
-            >
-                {Input}
-                <button className="px-2 bg-gray-300 text-base text-black rounded-md ">
-                    JOIN
-                </button>
-            </form>
+        <div className="bg-zinc-950 w-full h-full flex flex-col items-center">
+            <div className="bg-violet-500 h-2 w-screen relative top-0"></div>
+            <div className="flex flex-col flex-1 w-screen justify-center items-center">
+                <div className="p-10 text-violet-400 text-3xl font-semibold">Create your account</div>
+                {results.isError && ErrorContent}
+                <form
+                    onSubmit={handleSubmit}
+                    className="flex flex-col justify-center items-center"
+                >
+                    {Inputs}
+                    <button className="px-2 bg-[#eff3f4] rounded-full w-112 h-12 text-base font-semibold text-violet-500 m-2 mt-12 border-[1px] border-[#eff3f4] outline-none">
+                        Sign Up
+                    </button>
+                </form>
+            </div>
         </div>
     )
 }
