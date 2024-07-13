@@ -14,7 +14,7 @@ const Input = ({ data }) => {
     return (
         <div className="flex flex-row w-112 h-12 m-2 bg-zinc-900 border-l-[3px] border-l-violet-500 justify-center">
             <div className={`mt-0.5 flex flex-col w-full justify-between items-start text-xs px-1 text-gray-500 `}>
-                <div className={`pl-1 transition duration-150 ease-in ${placeholder ? 'scale-100' : 'scale-[1.3]'}`}>
+                <div className={`pl-1 transition-all duration-300 ease-in-out  ${placeholder ? 'text-xs' : 'text-base'}`}>
                     {placeholder ? data.placeholder : ' '}
                 </div>
                 <input

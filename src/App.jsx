@@ -69,7 +69,7 @@ function App() {
   }
 
   return (
-    <div className="bg-[#212121] w-screen h-screen flex flex-col justify-center items-center">
+    <div className="bg-[#09090b] w-screen h-screen flex flex-col justify-center items-center">
       <Routes>
         <Route path="/" element={wsError || <Chat socket={socket} msgs={msgs} />} />
       </Routes>
