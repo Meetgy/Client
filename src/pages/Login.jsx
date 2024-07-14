@@ -1,3 +1,4 @@
+import { AiOutlineLoading } from "react-icons/ai";
 import Input from "../components/Input";
 import { useSignupMutation } from "../store";
 
@@ -62,14 +63,14 @@ const LoginPage = () => {
             <div className="bg-violet-500 h-2 w-screen relative top-0"></div>
             <div className="flex flex-col flex-1 w-screen justify-center items-center">
                 <div className="p-10 text-violet-400 text-3xl font-semibold">Create your account</div>
-                {results.isError && ErrorContent}
+                {results.isError && "Some error occurred"}
                 <form
                     onSubmit={handleSubmit}
                     className="flex flex-col justify-center items-center"
                 >
                     {Inputs}
-                    <button className="px-2 bg-[#eff3f4] rounded-full w-112 h-12 text-base font-semibold text-violet-500 m-2 mt-12 border-[1px] border-[#eff3f4] outline-none">
-                        Sign Up
+                    <button className="flex justify-center items-center px-2 bg-[#eff3f4] rounded-full w-112 h-12 text-base font-semibold text-violet-500 m-2 mt-12 border-[1px] border-[#eff3f4] outline-none">
+                        {results?.isLoading ? <AiOutlineLoading className="animate-spin text-2xl" /> : 'Sign Up'}
                     </button>
                 </form>
             </div>
