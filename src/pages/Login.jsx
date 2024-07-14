@@ -18,43 +18,56 @@ const LoginPage = () => {
         };
         signup(user)
     };
-    let ErrorContent;
-    if(results.isError) {
-        ErrorContent = <div className="p-2 text-violet-400 text-xl ">Please try again after some time</div>
-    }
-    if (results.isSuccess) {
-        window.localStorage.setItem("biscut", results?.data?._id);
-    }
-
+    
     const dataInputs = [
         {
             name: "username",
             placeholder: "Username",
             minlength: "1",
             maxlength: "50",
+            required: true,
         },
         {
             name: "name",
             placeholder: "Name",
             minlength: "1",
             maxlength: "50",
+            required: true,
         },
         {
             name: "email",
             placeholder: "Email",
             minlength: null,
             maxlength: null,
+            required: true,
         },
         {
             name: "password",
             placeholder: "Password",
             minlength: null,
             maxlength: null,
+            required: true,
         },
     ];
+    
+    let ErrorsMap = new Map();
+    // ErrorContent = <div className="p-2 text-violet-400 text-sm ">{Object.keys(results?.error.data}</div>
+    if (results?.isError) {
+        if (results.error.data.name == "ValidationError") {
+            Object.keys(results.error.data.errors).forEach(errorType => {
+                ErrorsMap.set(errorType, results.error.data.errors[errorType]);
+            })
+        }
+        console.log(ErrorsMap)
+    }
+    if (results?.isSuccess) {
+        window.localStorage.setItem("biscut", results?.data?._id);
+    }
+
     const Inputs = dataInputs.map((data, i) => {
+        const ErrorObject = ErrorsMap.get(data.name)
         return (
-            <Input key={i} data={data}/>
+            <Input key={i} data={data} ErrorObject={ErrorObject}/>
         );
     });
 
