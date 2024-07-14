@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
 #auto-input-styles:-webkit-autofill {
   -webkit-text-fill-color: rgb(167 139 250) !important;
-  -webkit-box-shadow: 0 0 0px 1000px #18181B inset !important;
+  -webkit-box-shadow: 0 0 0px 1000px rgb(24 24 27) inset !important;
   background-color: rgb(24 24 27) !important;
+  outline: none !important;
 }
