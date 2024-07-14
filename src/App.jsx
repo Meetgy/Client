@@ -58,7 +58,7 @@ function App() {
         clearTimeout(retryTimeout.current); // Clear any pending retries on unmount
       }
     };
-  }, [retryCount]); // Reconnect on retry count change
+  }, [retryCount, socket]); // Reconnect on retry count change
 
   if (!socket && wsError) {
     return (
