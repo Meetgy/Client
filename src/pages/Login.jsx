@@ -9,7 +9,7 @@ const LoginPage = () => {
         e.preventDefault();
 
         const user = {
-            username: e.target.username.value,
+            username: `@${e.target.username.value}`,
             name: e.target.name.value,
             email: e.target.email.value,
             password: e.target.password.value,
@@ -18,7 +18,7 @@ const LoginPage = () => {
         };
         signup(user)
     };
-    
+
     const dataInputs = [
         {
             name: "username",
@@ -49,34 +49,51 @@ const LoginPage = () => {
             required: true,
         },
     ];
-    
+
     let ErrorsMap = new Map();
-    // ErrorContent = <div className="p-2 text-violet-400 text-sm ">{Object.keys(results?.error.data}</div>
+    let ErrorsMsg = "An unexpected error occurred.";
     if (results?.isError) {
-        if (results.error.data.name == "ValidationError") {
-            Object.keys(results.error.data.errors).forEach(errorType => {
-                ErrorsMap.set(errorType, results.error.data.errors[errorType]);
-            })
+        if (results.error.status === "FETCH_ERROR") {
+            // Likely a network error (e.g., server is down)
+            ErrorsMsg = "Unable to connect to the server. Please check your internet connection or try again later."
+            console.error("Network error: The server may be offline.");
+        } else if (results?.isError) {
+            if (results.error.data.name == "ValidationError") {
+                ErrorsMsg = "There were validation errors. Please check the form and try again.";
+                Object.keys(results.error.data.errors).forEach(errorType => {
+                    ErrorsMap.set(errorType, results.error.data.errors[errorType]);
+                })
+            } else {
+                ErrorsMsg = results.error.data.message || "An error occurred on the server.";
+            }
+        } else {
+            // Other kinds of errors
+            console.error("An unknown error occurred:", results.error);
         }
-        console.log(ErrorsMap)
+        console.log(results)
     }
+
     if (results?.isSuccess) {
-        window.localStorage.setItem("biscut", results?.data?._id);
+        window.localStorage.setItem("biscut", results?.data?.user._id);
     }
 
     const Inputs = dataInputs.map((data, i) => {
-        const ErrorObject = ErrorsMap.get(data.name)
+        const ErrorObject = ErrorsMap.get(data?.name)
         return (
-            <Input key={i} data={data} ErrorObject={ErrorObject}/>
+            <Input key={i} data={data} ErrorObject={ErrorObject} />
         );
     });
-
+    if (results.isError) {
+        console.log(results.isError)
+    }
     return (
         <div className="bg-zinc-950 w-full h-full flex flex-col items-center">
             <div className="bg-violet-500 h-2 w-screen relative top-0"></div>
             <div className="flex flex-col flex-1 w-screen justify-center items-center">
                 <div className="p-10 text-violet-400 text-3xl font-semibold">Create your account</div>
-                {results.isError && "Some error occurred"}
+                <div className="p-2 text-violet-400 text-sm ">
+                        {results.isError && ErrorsMsg}
+                </div>
                 <form
                     onSubmit={handleSubmit}
                     className="flex flex-col justify-center items-center"
