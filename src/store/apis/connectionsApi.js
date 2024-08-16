@@ -10,7 +10,7 @@ const connectionsApi = createApi({
             fetchUsers: builder.query({
                 query: () => {
                     return {
-                        url: '/users',
+                        url: '/user/connections',
                         method: 'GET'
                     }
                 }
