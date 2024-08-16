@@ -18,7 +18,7 @@ const Connections = ({ data, handleReceiverId }) => {
                     setIsOpen(false);
                 }} >
                     <div>{user.name}</div>
-                    <div>@{user.username}</div>
+                    <div>{user.username}</div>
                 </div>
             )
         }

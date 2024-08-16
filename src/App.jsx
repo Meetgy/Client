@@ -30,7 +30,7 @@ const App = () => {
   return (
     <div className="bg-[#09090b] w-screen h-screen flex flex-col justify-center items-center">
       <Routes>
-        <Route path="/" element={error || <Chat socket={socket} msgs={msgs} />} />
+        <Route path={`/`} element={error || <Chat socket={socket} msgs={msgs} />} />
       </Routes>
     </div>
   );
