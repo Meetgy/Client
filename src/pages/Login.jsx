@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AiOutlineLoading } from "react-icons/ai";
 import Input from "../components/Input";
 import { useSignupMutation, useLoginMutation } from "../store";
+import { FaArrowsRotate } from "react-icons/fa6";
 
 const LoginPage = () => {
     const [isSignUp, setIsSignUp] = useState(true);
@@ -151,9 +152,7 @@ const LoginPage = () => {
                             }}
                             className="bg-violet-500 text-white p-2 rounded-full hover:bg-violet-600 transition-colors duration-300 group"
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 transition-transform duration-300 ease-in-out group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                            </svg>
+                            <FaArrowsRotate className="h-5 w-5 transition-transform duration-300 ease-in-out group-hover:rotate-180" />
                         </button>
                     </button>
                 </form>
