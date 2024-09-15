@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 
-const Connections = ({ data, handleReceiverId }) => {
+const Connections = ({ data, handleConnection }) => {
     const [isOpen, setIsOpen] = useState(false)
 
     const userId = window.localStorage.getItem("biscut");
@@ -14,7 +14,7 @@ const Connections = ({ data, handleReceiverId }) => {
         if (user._id !== userId) {
             return (
                 <div key={i} className="flex flex-row gap-2 bg-gray-950" onClick={() => {
-                    handleReceiverId(user);
+                    handleConnection(user);
                     setIsOpen(false);
                 }} >
                     <div>{user.name}</div>
@@ -25,7 +25,7 @@ const Connections = ({ data, handleReceiverId }) => {
     })
 
     return (
-        <div className="text-white w-96 ">
+        <div className="text-white w-96 cursor-pointer">
             <div onClick={handleDropDown} className="flex flex-row items-center">
                 Users {isOpen ? <IoMdArrowDropup className="text-xl" /> : <IoMdArrowDropdown className="text-xl" />}
             </div>
