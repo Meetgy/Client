@@ -3,12 +3,15 @@ import { AiOutlineLoading } from "react-icons/ai";
 import Input from "../components/Input";
 import { useSignupMutation, useLoginMutation } from "../store";
 import { FaArrowsRotate } from "react-icons/fa6";
+import useNavigation from "../hooks/useNavigation";
 
-const LoginPage = () => {
+const Login = () => {
     const [isSignUp, setIsSignUp] = useState(true);
     
     const [signup, signUpResults] = useSignupMutation();
     const [login, logInResults] = useLoginMutation();
+
+    const { navigate } = useNavigation();
 
     const results = isSignUp ? signUpResults : logInResults;
 
@@ -106,6 +109,7 @@ const LoginPage = () => {
 
     if (results?.isSuccess) {
         window.localStorage.setItem("biscut", results?.data?.user._id);
+        navigate("/DashBoard")
     }
 
     let typeOfInput = isSignUp ? signUpDataInputs : logInDataInputs
@@ -161,4 +165,4 @@ const LoginPage = () => {
     )
 }
 
-export default LoginPage;
+export default Login;
