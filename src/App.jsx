@@ -5,18 +5,23 @@ import useNavigation from "./hooks/useNavigation.js";
 
 const App = () => {
   const userId = window.localStorage.getItem("biscut");
-  const { navigate } = useNavigation();
+  const { navigate, currentPath } = useNavigation();
   
-  if (!userId) {
-    navigate("/login");
-  } else {
-    navigate("/dashboard");
+  let checker = currentPath.includes("/dashboard")
+  
+  if(!checker)
+  {
+    if (!userId) {
+      navigate("/login");
+    } else {
+      navigate("/dashboard");
+    }
   }
 
   return (
     <div className="bg-[#09090b] w-screen h-screen flex flex-col justify-center items-center">
       <Route path='/login'><Login /></Route>
-      <Route path='/dashboard'><Dashboard /></Route>
+      {checker && <Dashboard />}
     </div>
   );
 }
