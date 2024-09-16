@@ -4,6 +4,7 @@ import Input from "../components/Input";
 import { useSignupMutation, useLoginMutation } from "../store";
 import { FaArrowsRotate } from "react-icons/fa6";
 import useNavigation from "../hooks/useNavigation";
+import HorizontalBar from "../components/styling_Comps/HorizontalBar"
 
 const Login = () => {
     const [isSignUp, setIsSignUp] = useState(true);
@@ -125,7 +126,7 @@ const Login = () => {
     }
     return (
         <div className="bg-zinc-950 w-full h-full flex flex-col items-center">
-            <div className="bg-violet-500 h-2 w-screen relative top-0"></div>
+            <HorizontalBar />
             <div className="flex flex-col flex-1 w-screen justify-center items-center">
                 <div className="p-10 text-violet-400 text-3xl font-semibold">
                     {isSignUp ? "Create your account" : "Login to your account"}
