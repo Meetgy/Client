@@ -1,6 +1,6 @@
 import useNavigation from "../../hooks/useNavigation"
 
-const Link = ({ to, chilren }) => {
+const Link = ({ to, chilren, className }) => {
     const { navigate } = useNavigation();
     
     const handleClick = (e) => {
@@ -9,7 +9,7 @@ const Link = ({ to, chilren }) => {
         navigate(to)
     }
 
-    return <a href={to} onClick={handleClick}>{chilren}</a>
+    return <a href={to} onClick={handleClick} className={className}>{chilren}</a>
 }
 
 export default Link
