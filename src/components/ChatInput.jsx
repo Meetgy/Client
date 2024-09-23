@@ -1,8 +1,23 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IoSend } from "react-icons/io5";
 
 const ChatInput = ({ socket, receiver}) => {
     const [newMsg, setNewMsg] = useState("");
+    const buttonRef = useRef(null);
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if(e.key === "Enter"){
+                buttonRef.current.click();
+            }
+        }
+
+        window.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        }
+    },[])
 
     const handleSendMSG = () => {
         if (newMsg != "") {
@@ -31,8 +46,9 @@ const ChatInput = ({ socket, receiver}) => {
                 placeholder="Send Msg..."
             />
             <button
+                ref={buttonRef}
                 className="px-2 text-2xl text-violet-500"
-                onClick={handleSendMSG}
+                onClick={(e) => handleSendMSG(e)}
             >
                 <IoSend />
             </button>
