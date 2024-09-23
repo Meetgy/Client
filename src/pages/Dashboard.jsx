@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
-import useWebSocket from "../hooks/useWebSocket.js"; 
+import useWebSocket from "../hooks/useWebSocket.js";
 import { useFetchUsersQuery } from "../store/index.js";
 import Connections from "../components/Connections.jsx";
-import Route from "../components/utils/Route.jsx";
 import Chat from "../components/Chat";
+import ChatInput from "../components/ChatInput.jsx";
+import Route from "../components/utils/Route.jsx";
+import HorizontalBar from "../components/styling_Comps/HorizontalBar"
+import { MdKeyboardArrowLeft } from "react-icons/md";
 
 const Dashboard = () => {
   const [msgs, setMsgs] = useState([]);
@@ -42,11 +45,20 @@ const Dashboard = () => {
     );
   }
   return (
-    <div className="flex flex-row">
-      {users}
-      {/* <Route path={`/${connection._id}`}> */}
-        <Chat socket={socket} msgs={msgs} receiver={connection} />
-      {/* </Route> */}
+    <div className="bg-zinc-950 w-full h-full flex flex-col items-center">
+      <HorizontalBar />
+      <div className="flex flex-row justify-between h-screen w-screen">
+        {users}
+        <div className="flex flex-col justify-between w-full">
+          <div className="text-gray-100 text-lg flex flex-row items-center bg-[#1a1a1d] h-12 py-3">
+            <div className="flex flex-row gap-2 items-center text-violet-500 px-4 text-lg"><MdKeyboardArrowLeft className="text-2xl" />{connection.name}</div>
+          </div>
+          <Route path={`/dashboard/${connection._id}`}>
+            <Chat socket={socket} msgs={msgs} />
+          </Route>
+          <ChatInput socket={socket} receiver={connection} />
+        </div>
+      </div>
     </div>
   )
 }
