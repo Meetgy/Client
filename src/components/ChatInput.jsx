@@ -21,7 +21,7 @@ const ChatInput = ({ socket, receiver}) => {
 
     const handleSendMSG = () => {
         if (newMsg != "") {
-            if (receiver) {
+            if (receiver && window.localStorage.getItem("biscut") != undefined) {
                 const data = JSON.stringify({
                     content: newMsg,
                     sender_id: window.localStorage.getItem("biscut"),
