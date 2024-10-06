@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { IoSend } from "react-icons/io5";
 
-const ChatInput = ({ socket, receiver}) => {
+const ChatInput = ({ socket, receiver_id}) => {
     const [newMsg, setNewMsg] = useState("");
     const buttonRef = useRef(null);
 
@@ -21,11 +21,11 @@ const ChatInput = ({ socket, receiver}) => {
 
     const handleSendMSG = () => {
         if (newMsg != "") {
-            if (receiver && window.localStorage.getItem("biscut") != undefined) {
+            if (receiver_id && window.localStorage.getItem("biscut") != undefined) {
                 const data = JSON.stringify({
                     content: newMsg,
                     sender_id: window.localStorage.getItem("biscut"),
-                    receiver_id: receiver._id,
+                    receiver_id,
                     state: "sent",
                 });
                 socket.send(data);

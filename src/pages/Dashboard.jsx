@@ -56,7 +56,7 @@ const Dashboard = () => {
           <Route path={`/dashboard/${connection._id}`}>
             <Chat socket={socket} msgs={msgs} />
           </Route>
-          <ChatInput socket={socket} receiver={connection} />
+          <ChatInput socket={socket} receiver_id={connection._id} />
         </div>
       </div>
     </div>
