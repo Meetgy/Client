@@ -26,7 +26,7 @@ const ChatInput = ({ socket, receiver}) => {
                     content: newMsg,
                     sender_id: window.localStorage.getItem("biscut"),
                     receiver_id: receiver._id,
-                    state: "pending",
+                    state: "sent",
                 });
                 socket.send(data);
                 setNewMsg("");
