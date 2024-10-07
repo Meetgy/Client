@@ -6,6 +6,7 @@ export default {
   ],
   theme: {
     extend: {
+      scrollbar: ['dark'],
       width : {
         "112" : "28rem"
       }
