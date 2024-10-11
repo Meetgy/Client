@@ -20,7 +20,7 @@ const Connections = ({ data, handleConnection }) => {
     })
 
     return (
-        <div className="bg-[#1a1a1d] text-white w-96 max-h-screen cursor-pointer rounded overflow-y-auto overflow-x-hidden p-4">
+        <div className="bg-[#1a1a1d] text-white w-96 max-h-screen cursor-pointer rounded overflow-y-scroll custom-scrollbar p-4">
             <div className="text-xl font-bold text-white">Chats</div>
             {content}
         </div>
