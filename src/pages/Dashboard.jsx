@@ -1,18 +1,21 @@
 import { useEffect, useState } from "react";
 import useWebSocket from "../hooks/useWebSocket.js";
-import { useFetchUsersQuery } from "../store/index.js";
+import { addMessages, useFetchUsersQuery } from "../store/index.js";
 import Connections from "../components/Connections.jsx";
 import Chat from "../components/Chat";
 import ChatInput from "../components/ChatInput.jsx";
 import Route from "../components/utils/Route.jsx";
 import HorizontalBar from "../components/styling_Comps/HorizontalBar"
 import { MdKeyboardArrowLeft } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
 
 const Dashboard = () => {
-  const [msgs, setMsgs] = useState([]);
   const [connection, setConnection] = useState('');
 
   const userId = window.localStorage.getItem("biscut");
+
+  const msgs = useSelector(state => state.messagesSlice.messages);
+  const dispatch = useDispatch();
 
   const { socket, error } = useWebSocket(`ws://localhost:8000/chat?userId=${userId}`);
 
@@ -23,11 +26,11 @@ const Dashboard = () => {
       socket.onmessage = (msg) => {
         const parsedMessage = JSON.parse(msg?.data);
         if (parsedMessage) {
-          setMsgs(prevMsg => [...prevMsg, parsedMessage]);
+          dispatch(addMessages(parsedMessage));
         }
       };
     }
-  }, [socket]);
+  }, [socket, msgs]);
 
   const handleConnection = (user) => {
     setConnection(user)
