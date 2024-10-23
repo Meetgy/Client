@@ -22,13 +22,13 @@ const ChatInput = ({ socket, receiver_id}) => {
     const handleSendMSG = () => {
         if (newMsg.trim() != "") {
             if (receiver_id && window.localStorage.getItem("biscut") != undefined) {
-                const data = JSON.stringify({
+                const data = {
                     content: newMsg,
                     sender_id: window.localStorage.getItem("biscut"),
                     receiver_id,
                     state: "sent",
-                });
-                socket.send(data);
+                };
+                socket.send(JSON.stringify(data));
                 setNewMsg("");
             } else {
                 alert("Select a User to send Msg")
