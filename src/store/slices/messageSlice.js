@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const messageSlice = createSlice({
+const messagesSlice = createSlice({
     name: 'messages',
     initialState: {
       messages: [], // Stores the message objects
@@ -24,4 +24,4 @@ const messageSlice = createSlice({
   
   export const { oldMessages, addMessages, updateMessageState } = messageSlice.actions;
   
-  export const messageReducer = messageSlice.reducer;
+  export const messagesReducer = messagesSlice.reducer;

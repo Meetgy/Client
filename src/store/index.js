@@ -2,11 +2,11 @@ import { configureStore } from "@reduxjs/toolkit";
 import { connectionsApi } from "./apis/connectionsApi";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { loginApi } from "./apis/loginApi";
-import { messageReducer } from "./slices/messageSlice";
+import { messagesReducer } from "./slices/messageSlice";
 
 export const store = configureStore({
     reducer: {
-        messagesSlice: messageReducer,
+        messagesSlice: messagesReducer,
         [connectionsApi.reducerPath]: connectionsApi.reducer,
         [loginApi.reducerPath]: loginApi.reducer,
     },
