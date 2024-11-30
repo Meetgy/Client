@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react';
+import MessageBubble from './MessageBubble';
+// import Route from './utils/Route';
 
-const Chat = ({ msgs }) => {
+const ChatWindow = ({ msgs}) => {
     const messagesEndRef = useRef(null);
 
     const scrollToBottom = () => {
@@ -13,14 +15,7 @@ const Chat = ({ msgs }) => {
 
     const content = msgs?.map((msg, i) => {
         return (
-            <div key={i} className="flex flex-col items-center w-full">
-                <div className="text-white flex flex-row items-center bg-violet-400 px-2 py-1 rounded-md self-end">
-                    {msg?.message?.content}
-                </div>
-                <div className="text-zinc-400 text-xs self-end">
-                    {msg?.message?.state}
-                </div>
-            </div>
+            <MessageBubble msg={msg} key={i} />
         );
     });
 
@@ -32,4 +27,4 @@ const Chat = ({ msgs }) => {
     )
 }
 
-export default Chat;
+export default ChatWindow;
