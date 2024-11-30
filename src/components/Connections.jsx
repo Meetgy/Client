@@ -6,7 +6,7 @@ const Connections = ({ data, handleConnection }) => {
     let content = data?.map((user, i) => {
         if (user._id !== userId) {
             return (
-                <Link to={`/dashboard/${user._id}`} key={i} className="flex flex-row h-10 gap-2 m-2 p-1 outline-none" onClick={() => {
+                <Link to={`/dashboard/chat/${user._id}`} key={i} className="flex flex-row h-10 gap-2 m-2 p-1 outline-none" onClick={() => {
                     handleConnection(user);
                 }} >
                     <div className="bg-violet-500 h-10 w-0.5"></div>
