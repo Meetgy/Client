@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import useWebSocket from "../hooks/useWebSocket.js";
-import { addMessages, useFetchUsersQuery } from "../store/index.js";
+import { addMessages } from "../store/index.js";
 import Connections from "../components/Connections.jsx";
-import Chat from "../components/Chat";
 import ChatInput from "../components/ChatInput.jsx";
+import ChatWindow from "../components/ChatWindow.jsx";
 import Route from "../components/utils/Route.jsx";
 import HorizontalBar from "../components/styling_Comps/HorizontalBar"
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
+import { useConnections } from "../hooks/useConnections.js";
 
 const Dashboard = () => {
   const [connection, setConnection] = useState('');
@@ -19,7 +20,7 @@ const Dashboard = () => {
 
   const { socket, error } = useWebSocket(`ws://localhost:8000/chat?userId=${userId}`);
 
-  const { data, isError, isSuccess } = useFetchUsersQuery();
+  const { connections, isError, isSuccess } = useConnections();
 
   useEffect(() => {
     if (socket) {
@@ -27,6 +28,7 @@ const Dashboard = () => {
         const parsedMessage = JSON.parse(msg?.data);
         if (parsedMessage) {
           dispatch(addMessages(parsedMessage));
+          console.log(msgs)
         }
       };
     }
@@ -38,7 +40,7 @@ const Dashboard = () => {
 
   let users;
   if (!isError && isSuccess) {
-    users = <Connections data={data} handleConnection={handleConnection} />
+    users = <Connections data={connections} handleConnection={handleConnection} />
   }
   if (error) {
     return (
@@ -59,8 +61,8 @@ const Dashboard = () => {
           <div className="text-gray-100 text-lg flex flex-row items-center bg-[#1a1a1d] h-12 py-3 sticky top-0 z-10">
             <div className="flex flex-row gap-2 items-center text-violet-500 px-4 text-lg"><MdKeyboardArrowLeft className="text-2xl" />{connection.name}</div>
           </div>
-          <Route path={`/dashboard/${connection._id}`}>
-            <Chat socket={socket} msgs={msgs} />
+          <Route path={`/dashboard/chat/${connection._id}`}>
+            <ChatWindow msgs={msgs} />
           </Route>
           <ChatInput socket={socket} receiver_id={connection._id} />
         </div>
