@@ -1,4 +1,4 @@
-import { useFetchUsersQuery } from "../store/apis/connectionsApi";
+import { useFetchUsersQuery } from "../store/index";
 
 export const useConnections = () => {
   const { data, isSuccess, isError } = useFetchUsersQuery();
