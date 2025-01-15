@@ -1,6 +1,6 @@
-import { useGetChatUsersQuery } from "../store/index";
+import { useGetChatUsersApiQuery } from "../store/apis/getChatUsersApi";
 
 export const useChatUsers = () => {
-  const { data, isError, isSuccess } = useGetChatUsersQuery();
-  return { userss: data || [], usersIsError: isError, usersIsSuccess: isSuccess };
+  const { data, isError, isSuccess } = useGetChatUsersApiQuery();
+  return { users: data || [], isError, isSuccess };
 };

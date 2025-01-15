@@ -1,14 +1,14 @@
 const MessageBubble = ({ msg }) => {
-    const userId = window.localStorage.getItem("biscut");
     return (
-        <div className={`max-w-[70%] rounded-lg p-3 my-1 ${
-            msg.message.sender_id == userId
-                ? 'bg-violet-400 text-white rounded-tr-none' 
-                : 'bg-gray-200 text-gray-800 rounded-tl-none'
-        }`}>
-            {msg.message.content}
+        <div className="flex flex-col items-center w-full">
+            <div className="text-white flex flex-row items-center bg-violet-400 px-2 py-1 rounded-md self-end">
+                {msg?.message?.content}
+            </div>
+            <div className="text-zinc-400 text-xs self-end">
+                {msg?.message?.state}
+            </div>
         </div>
-    );
-};
+    )
+}
 
 export default MessageBubble;
