@@ -24,7 +24,7 @@ setupListeners(store.dispatch);
 
 export { useSignupMutation, useLoginMutation } from "./apis/loginApi"
 export { useFetchUsersQuery } from "./apis/connectionsApi"
-export { useGetChatUsersQuery } from "./apis/getChatUsersApi"
+export { useGetChatUsersApiQuery } from "./apis/getChatUsersApi"
 export {
     oldMessages,
     addMessages,
