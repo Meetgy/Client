@@ -34,5 +34,7 @@ export {
 } from "./slices/messageSlice"
 export {
     setToken,
-    clearToken
+    clearToken,
+    setUserId,
+    clearUserId
 } from "./slices/authSlice"

@@ -13,7 +13,7 @@ import { useConnections } from "../hooks/useConnections.js";
 const Dashboard = () => {
   const [connection, setConnection] = useState('');
 
-  const userId = window.localStorage.getItem("biscut");
+  const userId = useSelector(state => state.auth.userId);
 
   const msgs = useSelector(state => state.messagesSlice.messages);
   const dispatch = useDispatch();

@@ -1,5 +1,7 @@
+import { useSelector } from "react-redux";
+
 const MessageBubble = ({ msg }) => {
-    const userId = window.localStorage.getItem("biscut");
+    const userId = useSelector(state => state.auth.userId);
     return (
         <div className={`max-w-[70%] rounded-lg p-3 my-1 ${
             msg.message.sender_id == userId

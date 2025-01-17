@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { IoSend } from "react-icons/io5";
+import { useSelector } from "react-redux";
 
 const ChatInput = ({ socket, receiver_id}) => {
     const [newMsg, setNewMsg] = useState("");
     const buttonRef = useRef(null);
-
+    const userId = useSelector(state => state.auth.userId);
+    
     useEffect(() => {
         const handleKeyDown = (e) => {
             if(e.key === "Enter"){
@@ -21,10 +23,10 @@ const ChatInput = ({ socket, receiver_id}) => {
 
     const handleSendMSG = () => {
         if (newMsg.trim() != "") {
-            if (receiver_id && window.localStorage.getItem("biscut") != undefined) {
+            if (receiver_id && userId != undefined) {
                 const data = {
                     content: newMsg,
-                    sender_id: window.localStorage.getItem("biscut"),
+                    sender_id: userId,
                     receiver_id,
                     state: "sent",
                 };
