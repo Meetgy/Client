@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AiOutlineLoading } from "react-icons/ai";
 import Input from "../components/Input";
-import { useSignupMutation, useLoginMutation, setToken } from "../store";
+import { useSignupMutation, useLoginMutation, setToken, setUserId } from "../store";
 import { FaArrowsRotate } from "react-icons/fa6";
 import useNavigation from "../hooks/useNavigation";
 import HorizontalBar from "../components/styling_Comps/HorizontalBar"
@@ -111,7 +111,7 @@ const Login = () => {
     }
 
     if (results?.isSuccess) {
-        window.localStorage.setItem("biscut", results?.data?.user._id);
+        dispatch(setUserId(results?.data?.user._id));
         dispatch(setToken(results?.data?.token));
         navigate("/DashBoard")
     }

@@ -1,7 +1,8 @@
+import { useSelector } from "react-redux";
 import Link from "./utils/Link";
 
 const Connections = ({ data, handleConnection }) => {
-    const userId = window.localStorage.getItem("biscut");
+    const userId = useSelector(state => state.auth.userId);
 
     let content = data?.map((user, i) => {
         if (user._id !== userId) {
