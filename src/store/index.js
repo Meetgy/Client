@@ -4,10 +4,12 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import { loginApi } from "./apis/loginApi";
 import { messagesReducer } from "./slices/messageSlice";
 import { getChatUsersApi } from "./apis/getChatUsersApi";
+import { authReducers } from "./slices/authSlice";
 
 export const store = configureStore({
     reducer: {
         messagesSlice: messagesReducer,
+        auth: authReducers,
         [loginApi.reducerPath]: loginApi.reducer,
         [connectionsApi.reducerPath]: connectionsApi.reducer,
         [getChatUsersApi.reducerPath]: getChatUsersApi.reducer,
@@ -30,3 +32,7 @@ export {
     addMessages,
     updateMessageState
 } from "./slices/messageSlice"
+export {
+    setToken,
+    clearToken
+} from "./slices/authSlice"
