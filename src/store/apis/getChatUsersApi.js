@@ -1,10 +1,25 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-// Define the API slice
+
+const baseQuery = fetchBaseQuery({
+    baseUrl: "http://localhost:8000",
+    prepareHeaders: (headers, { getState }) => {
+        let token = getState().auth.token; // First, try getting the token from Redux state
+    
+        if (!token) {
+          token = localStorage.getItem('token'); // Fallback to localStorage
+        }
+    
+        if (token) {
+          headers.set('authorization', `Bearer ${token}`);
+        }
+    
+        return headers;
+    },
+})
+
 const getChatUsersApi = createApi({
     reducerPath: 'getChatUsers', // Unique key for the slice
-    baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:8000"
-    }), // Base URL for API requests
+    baseQuery,
     endpoints: (builder) => {
         return {
             getChatUsers: builder.query({
